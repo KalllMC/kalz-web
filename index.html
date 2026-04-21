@@ -16,7 +16,7 @@ body{
     overflow-x:hidden;
 }
 
-/* 🔥 BACKGROUND GLOW ANIMASI */
+/* BACKGROUND GLOW */
 body::before{
     content:"";
     position:fixed;
@@ -25,8 +25,8 @@ body::before{
     background:radial-gradient(circle,#3b82f6,transparent);
     top:10%;
     left:10%;
-    filter:blur(150px);
-    opacity:0.3;
+    filter:blur(140px);
+    opacity:0.25;
     animation:moveGlow 10s infinite alternate ease-in-out;
 }
 @keyframes moveGlow{
@@ -68,38 +68,30 @@ body::before{
     padding:120px 20px;
     transition:.4s;
 }
+#hero.hide{
+    opacity:0;
+    transform:translateY(-20px);
+}
 
-/* ✨ TEXT ANIMASI */
+/* TEXT ANIMATION */
 .title{
     font-family:'Orbitron';
     font-size:90px;
-    position:relative;
+}
+.title span{
+    transition:0.3s;
     color:#e2e8f0;
-    overflow:hidden;
 }
-.title::after{
-    content:"";
-    position:absolute;
-    top:0;
-    left:-100%;
-    width:100%;
-    height:100%;
-    background:linear-gradient(120deg,transparent,rgba(255,255,255,0.6),transparent);
-    animation:shine 3s infinite;
+.title span.active{
+    color:#3b82f6;
+    text-shadow:0 0 15px #3b82f6;
 }
-@keyframes shine{
-    0%{left:-100%;}
-    100%{left:100%;}
-}
-
-.title span{color:#3b82f6;}
 
 /* SUBTEXT */
 .subtext{
     margin-top:10px;
     font-size:14px;
     color:#93c5fd;
-    opacity:0.9;
 }
 
 /* BUTTON */
@@ -175,27 +167,17 @@ body::before{
 #panel{
     display:none;
     padding:50px 20px;
-    opacity:0;
-    transform:translateY(30px);
-    transition:.4s;
 }
 #panel.active{
     display:block;
-    opacity:1;
-    transform:translateY(0);
+    animation:fadeIn .3s ease;
+}
+@keyframes fadeIn{
+    from{opacity:0;transform:translateY(20px);}
+    to{opacity:1;transform:translateY(0);}
 }
 
-.panel-title{
-    text-align:center;
-    font-family:'Orbitron';
-    font-size:50px;
-}
-.panel-title span{color:#3b82f6;}
-
-.tabs{
-    text-align:center;
-    margin-top:20px;
-}
+.tabs{text-align:center;}
 .tab{
     padding:10px 20px;
     border:1px solid #3b82f6;
@@ -203,16 +185,9 @@ body::before{
     margin:5px;
     cursor:pointer;
 }
-.tab.active{
-    background:#3b82f6;
-}
+.tab.active{background:#3b82f6;}
 
-/* CARD */
-.cards{
-    display:none;
-    justify-content:center;
-    margin-top:30px;
-}
+.cards{display:none;justify-content:center;margin-top:30px;}
 .cards.active{display:flex;}
 
 .product-card{
@@ -220,11 +195,6 @@ body::before{
     padding:20px;
     border-radius:20px;
     border:1px solid rgba(59,130,246,0.3);
-    background:rgba(10,15,30,0.6);
-}
-.price{
-    color:#60a5fa;
-    font-size:22px;
 }
 
 /* BUTTON */
@@ -237,10 +207,7 @@ body::before{
     background:#3b82f6;
     color:white;
     cursor:pointer;
-    transition:.2s;
 }
-.buy:hover{transform:scale(1.05);}
-.buy:active{transform:scale(0.95);}
 
 /* POPUP */
 .popup{
@@ -260,54 +227,12 @@ body::before{
     border-radius:20px;
     padding:20px;
     position:relative;
-    animation:fadeIn .25s ease;
-}
-@keyframes fadeIn{
-    from{opacity:0;transform:scale(.9);}
-    to{opacity:1;transform:scale(1);}
-}
-
-.popup-box h2{
-    text-align:center;
-    font-family:'Orbitron';
 }
 .close-pop{
     position:absolute;
     right:15px;
     top:15px;
     cursor:pointer;
-}
-
-/* PAY */
-.pay{
-    padding:15px;
-    margin:10px 0;
-    border-radius:10px;
-    text-align:center;
-    cursor:pointer;
-}
-.wa{border:1px solid #22c55e;}
-.dc{border:1px solid #60a5fa;}
-.pay:hover{transform:scale(1.03);}
-
-/* PKG */
-.pkg{
-    padding:12px;
-    border:1px solid #3b82f6;
-    border-radius:10px;
-    margin:6px 0;
-    cursor:pointer;
-}
-.pkg.selected{background:#3b82f6;}
-
-.next{
-    width:100%;
-    margin-top:15px;
-    padding:12px;
-    background:#22c55e;
-    border:none;
-    border-radius:10px;
-    color:white;
 }
 </style>
 </head>
@@ -326,22 +251,99 @@ body::before{
 
 <!-- HERO -->
 <section id="hero">
-<h1 class="title">KALZ<span>X</span></h1>
-<div class="subtext">premium panel smooth & safe only one in Kalz Project</div>
+<h1 class="title">
+<span>K</span><span>A</span><span>L</span><span>Z</span><span>X</span>
+</h1>
+
+<div class="subtext">
+premium panel smooth & safe only one in Kalz Project
+</div>
+
 <button class="btn" onclick="goPanel()">LIHAT CHEAT</button>
 </section>
 
-<!-- SISANYA TETAP SAMA (panel, popup, dll gak diubah biar aman) -->
+<!-- SIDEBAR -->
+<div id="sidebar" class="sidebar">
+<div class="side-top">
+<h2>KALZX</h2>
+<p>premium panel v1.0</p>
+<div class="close-btn" onclick="closeAll()">✖</div>
+</div>
+
+<div class="menu">
+<div class="item" onclick="goHome()">Home</div>
+<div class="item" onclick="goPanel()">List Cheat</div>
+</div>
+</div>
+
+<!-- PANEL -->
+<section id="panel">
+<h1 style="text-align:center;">Panel VIP</h1>
+
+<div class="tabs">
+<span class="tab active" onclick="switchTab('pc',this)">KALZ PC</span>
+<span class="tab" onclick="switchTab('andro',this)">KALZ ANDRO</span>
+</div>
+
+<div id="pc" class="cards active">
+<div class="product-card">
+<h3>REMOTE PANEL PC</h3>
+<button class="buy">BELI</button>
+</div>
+</div>
+
+<div id="andro" class="cards">
+<div class="product-card">
+<h3>REMOTE PANEL ANDRO</h3>
+<button class="buy">BELI</button>
+</div>
+</div>
+
+</section>
 
 <script>
-function openMenu(){sidebar.classList.add("active");overlay.classList.add("active");}
-function closeAll(){sidebar.classList.remove("active");overlay.classList.remove("active");}
+/* TEXT ANIMATION PINDAH */
+const letters = document.querySelectorAll('.title span');
+let index = 0;
+
+setInterval(()=>{
+    letters.forEach(l=>l.classList.remove('active'));
+    letters[index].classList.add('active');
+    index = (index + 1) % letters.length;
+},500);
+
+/* MENU */
+function openMenu(){
+    sidebar.classList.add("active");
+    overlay.classList.add("active");
+}
+
+function closeAll(){
+    sidebar.classList.remove("active");
+    overlay.classList.remove("active");
+}
+
 function goPanel(){
-    hero.style.opacity="0";
+    hero.classList.add("hide");
     setTimeout(()=>{
         hero.style.display="none";
         panel.classList.add("active");
     },300);
+}
+
+function goHome(){
+    panel.classList.remove("active");
+    hero.style.display="block";
+    setTimeout(()=>hero.classList.remove("hide"),10);
+    closeAll();
+}
+
+function switchTab(tab,el){
+    document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+    el.classList.add('active');
+
+    document.querySelectorAll('.cards').forEach(c=>c.classList.remove('active'));
+    document.getElementById(tab).classList.add('active');
 }
 </script>
 
