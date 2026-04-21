@@ -3,205 +3,277 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>KALZ WEB</title>
+<title>KALZX</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
 <style>
-body {
+body{
     margin:0;
-    font-family:'Segoe UI',sans-serif;
-    background:linear-gradient(180deg,#05070d,#0a0f1f,#05070d);
-    color:#d6e4ff;
+    background:#020617;
+    color:#cbd5ff;
+    font-family:'Poppins',sans-serif;
 }
 
 /* NAV */
-.nav {
+.nav{
     display:flex;
-    justify-content:space-between;
+    justify-content:center;
     padding:20px;
 }
-.logo {color:#6ab0ff;font-weight:bold;}
-.menu-btn {cursor:pointer;font-size:22px;}
+.nav-box{
+    width:90%;
+    max-width:900px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:12px 20px;
+    border-radius:50px;
+    border:1px solid rgba(59,130,246,0.4);
+    background:rgba(10,15,30,0.6);
+}
+.logo{
+    font-family:'Orbitron';
+    color:#60a5fa;
+}
+.menu-btn{
+    background:#3b82f6;
+    padding:6px 10px;
+    border-radius:50%;
+    cursor:pointer;
+}
+
+/* HERO */
+#hero{
+    text-align:center;
+    padding:120px 20px;
+    transition:.4s;
+}
+#hero.hide{
+    opacity:0;
+    transform:translateY(-30px);
+}
+.title{
+    font-family:'Orbitron';
+    font-size:90px;
+}
+.title span{color:#3b82f6;}
+
+.btn{
+    margin-top:20px;
+    padding:14px 30px;
+    border:none;
+    border-radius:30px;
+    background:#3b82f6;
+    color:white;
+    cursor:pointer;
+    transition:.2s;
+}
+.btn:hover{transform:scale(1.05);}
+.btn:active{transform:scale(0.95);}
 
 /* OVERLAY */
-#overlay {
+#overlay{
     position:fixed;
-    top:0;left:0;
-    width:100%;height:100%;
+    inset:0;
     background:rgba(0,0,0,0.6);
     opacity:0;
     pointer-events:none;
-    transition:0.3s;
-    z-index:8;
+    transition:.3s;
 }
-#overlay.active {
+#overlay.active{
     opacity:1;
     pointer-events:auto;
 }
 
-/* MENU */
-.side {
+/* SIDEBAR */
+.sidebar{
     position:fixed;
+    right:-320px;
     top:0;
-    right:-100%;
-    width:75%;
+    width:320px;
     height:100%;
-    transition:0.35s;
+    background:#020617;
+    border-left:1px solid rgba(59,130,246,0.2);
+    transition:.4s;
     z-index:10;
+    display:flex;
+    flex-direction:column;
 }
-.side.active {right:0;}
+.sidebar.active{right:0;}
 
-.side-top {background:#081224;padding:20px;}
-.side-bottom {background:#0f1f3f;height:100%;padding:20px;}
-
-.menu-list {display:flex;flex-direction:column;gap:12px;margin-top:20px;}
-.menu-item {
-    padding:12px;
-    border-radius:10px;
-    background:rgba(255,255,255,0.05);
-    cursor:pointer;
+.side-top{
+    padding:20px;
+    border-bottom:1px solid rgba(59,130,246,0.2);
+    position:relative;
 }
-.menu-item:hover {background:#2b7cff;}
-
-.close-btn {
+.close-btn{
     position:absolute;
     right:15px;
     top:15px;
     cursor:pointer;
 }
 
-/* HERO */
-.hero {
-    text-align:center;
-    padding:100px 20px;
-    transition:0.3s;
+.menu{
+    padding:20px;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
 }
-.title {
-    font-size:70px;
-    font-weight:900;
-    background:linear-gradient(90deg,#6ab0ff,#2b7cff);
-    -webkit-background-clip:text;
-    color:transparent;
-}
-.subtitle {color:#8faaff;}
-
-.btn {
-    margin-top:40px;
-    padding:15px 40px;
-    border-radius:40px;
-    background:#2b7cff;
-    color:white;
-    border:none;
+.item{
+    padding:12px;
+    border-radius:10px;
     cursor:pointer;
+}
+.item:hover{
+    background:rgba(59,130,246,0.2);
 }
 
 /* PANEL */
-.panel {
-    padding:20px;
+#panel{
+    display:none;
+    padding:50px 20px;
     opacity:0;
-    transform:translateY(20px);
-    pointer-events:none;
-    transition:0.3s;
+    transform:translateY(30px);
+    transition:.4s;
 }
-.panel.active {
+#panel.active{
+    display:block;
     opacity:1;
     transform:translateY(0);
-    pointer-events:auto;
 }
 
-/* CATEGORY */
-.category {display:flex;gap:10px;}
-.cat {
-    flex:1;
-    padding:12px;
-    border:1px solid #2b7cff;
+.panel-title{
     text-align:center;
+    font-family:'Orbitron';
+    font-size:50px;
+}
+.panel-title span{color:#3b82f6;}
+
+.tabs{
+    text-align:center;
+    margin-top:20px;
+}
+.tab{
+    padding:10px 20px;
+    border:1px solid #3b82f6;
+    border-radius:30px;
+    margin:5px;
     cursor:pointer;
 }
-.active-tab {background:#2b7cff;}
+.tab.active{
+    background:#3b82f6;
+}
 
 /* CARD */
-.card {
-    margin-top:20px;
+.cards{
+    display:none;
+    justify-content:center;
+    margin-top:30px;
+}
+.cards.active{display:flex;}
+
+.product-card{
+    width:320px;
     padding:20px;
     border-radius:20px;
-    border:1px solid #2b7cff;
+    border:1px solid rgba(59,130,246,0.3);
+    background:rgba(10,15,30,0.6);
+}
+.price{
+    color:#60a5fa;
+    font-size:22px;
 }
 
-/* PACKAGE */
-.packages {
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:10px;
-}
-.pkg {
-    padding:10px;
-    border:1px solid #2b7cff;
-    text-align:center;
-    cursor:pointer;
-}
-.pkg.selected {background:#2b7cff;}
-
-/* 🔥 TAB ANIMATION FIX */
-.tab-container {
-    position:relative;
-    overflow:hidden;
-    height:auto;
-}
-
-.tab {
-    position:absolute;
+/* BUTTON */
+.buy{
     width:100%;
-    top:0;
-    left:0;
-    opacity:0;
-    transform:translateX(40px);
-    transition:0.35s ease;
-    pointer-events:none;
-}
-
-.tab.active {
-    opacity:1;
-    transform:translateX(0);
-    pointer-events:auto;
-    position:relative;
-}
-
-/* BUY */
-.buy {
-    margin-top:20px;
-    width:100%;
-    padding:14px;
-    background:#2b7cff;
+    margin-top:15px;
+    padding:12px;
     border:none;
     border-radius:10px;
+    background:#3b82f6;
     color:white;
+    cursor:pointer;
+    transition:.2s;
+}
+.buy:hover{
+    transform:scale(1.05);
+}
+.buy:active{
+    transform:scale(0.95);
 }
 
 /* POPUP */
-#buyPopup {
+.popup{
     position:fixed;
-    bottom:-100%;
-    left:0;
-    width:100%;
-    background:#0b1224;
-    padding:20px;
-    border-radius:20px 20px 0 0;
-    transition:0.35s;
+    inset:0;
+    display:none;
+    justify-content:center;
+    align-items:center;
     z-index:20;
 }
-#buyPopup.active {bottom:0;}
+.popup.active{display:flex;}
 
-.popup-btn {
-    width:100%;
-    padding:15px;
-    margin-top:10px;
-    border:none;
-    border-radius:10px;
-    font-weight:bold;
+.popup-box{
+    width:90%;
+    max-width:400px;
+    background:#1f2937;
+    border-radius:20px;
+    padding:20px;
+    position:relative;
+    animation:fadeIn .25s ease;
+}
+@keyframes fadeIn{
+    from{opacity:0;transform:scale(.9);}
+    to{opacity:1;transform:scale(1);}
+}
+
+.popup-box h2{
+    text-align:center;
+    font-family:'Orbitron';
+}
+.close-pop{
+    position:absolute;
+    right:15px;
+    top:15px;
     cursor:pointer;
 }
-.wa {background:#25D366;color:white;}
-.dc {background:#5865F2;color:white;}
+
+/* PAY */
+.pay{
+    padding:15px;
+    margin:10px 0;
+    border-radius:10px;
+    text-align:center;
+    cursor:pointer;
+}
+.wa{border:1px solid #22c55e;}
+.dc{border:1px solid #60a5fa;}
+.pay:hover{
+    transform:scale(1.03);
+}
+
+/* PKG */
+.pkg{
+    padding:12px;
+    border:1px solid #3b82f6;
+    border-radius:10px;
+    margin:6px 0;
+    cursor:pointer;
+}
+.pkg.selected{background:#3b82f6;}
+
+.next{
+    width:100%;
+    margin-top:15px;
+    padding:12px;
+    background:#22c55e;
+    border:none;
+    border-radius:10px;
+    color:white;
+    cursor:pointer;
+}
 </style>
 </head>
 
@@ -209,162 +281,163 @@ body {
 
 <div id="overlay" onclick="closeAll()"></div>
 
+<!-- NAV -->
 <div class="nav">
-    <div class="logo">KALZ PROJECT</div>
-    <div class="menu-btn" onclick="toggleMenu()">☰</div>
+<div class="nav-box">
+<div class="logo">KALZX</div>
+<div class="menu-btn" onclick="openMenu()">☰</div>
 </div>
-
-<!-- MENU -->
-<div id="sideMenu" class="side">
-    <div class="side-top">
-        <div class="close-btn" onclick="closeAll()">✖</div>
-        <h3>KALZ PROJECT</h3>
-        <p style="font-size:12px;">premium cheat 1.0</p>
-    </div>
-    <div class="side-bottom">
-        <div class="menu-list">
-            <div class="menu-item" onclick="goHome()">Home</div>
-            <div class="menu-item" onclick="openPanel()">List Cheat</div>
-        </div>
-    </div>
 </div>
 
 <!-- HERO -->
-<div id="landing" class="hero">
-    <div class="title">KALZ XITER</div>
-    <div class="subtitle">premium cheat 1.0</div>
-    <button class="btn" onclick="openPanel()">LIHAT CHEAT</button>
+<section id="hero">
+<h1 class="title">KALZ<span>X</span></h1>
+<button class="btn" onclick="goPanel()">LIHAT CHEAT</button>
+</section>
+
+<!-- SIDEBAR -->
+<div id="sidebar" class="sidebar">
+<div class="side-top">
+<h2>KALZX</h2>
+<p>premium panel v1.0</p>
+<div class="close-btn" onclick="closeAll()">✖</div>
+</div>
+
+<div class="menu">
+<div class="item" onclick="goHome()">Home</div>
+<div class="item" onclick="goPanel()">List Cheat</div>
+<div class="item">Keunggulan</div>
+<div class="item">Support</div>
+</div>
 </div>
 
 <!-- PANEL -->
-<div id="panel" class="panel">
+<section id="panel">
+<h1 class="panel-title">Panel <span>VIP</span></h1>
 
-    <h2>Panel VIP</h2>
-
-    <div class="category">
-        <div class="cat active-tab" onclick="switchTab('pc',this)">KALZ PC</div>
-        <div class="cat" onclick="switchTab('andro',this)">KALZ ANDRO</div>
-    </div>
-
-    <div class="tab-container">
-
-        <!-- PC -->
-        <div id="pc" class="card tab active">
-            <h3>KALZ REMOTE PANEL</h3>
-            <ul>
-                <li>AimHead</li>
-                <li>AimNeck</li>
-                <li>AimDrag</li>
-                <li>ESP</li>
-            </ul>
-
-            <div class="packages">
-                <div class="pkg" onclick="selectPkg(this,'PC 1H - 10K')">1H - 10K</div>
-                <div class="pkg" onclick="selectPkg(this,'PC 3H - 25K')">3H - 25K</div>
-                <div class="pkg" onclick="selectPkg(this,'PC 7H - 45K')">7H - 45K</div>
-                <div class="pkg" onclick="selectPkg(this,'PC 15H - 60K')">15H - 60K</div>
-                <div class="pkg" onclick="selectPkg(this,'PC 30H - 110K')">30H - 110K</div>
-            </div>
-        </div>
-
-        <!-- ANDRO -->
-        <div id="andro" class="card tab">
-            <h3>KALZ REMOTE PANEL ANDRO</h3>
-            <ul>
-                <li>Badan Headshot</li>
-                <li>Leher Headshot</li>
-                <li>Dada Headshot</li>
-                <li>Aim Silent</li>
-            </ul>
-
-            <div class="packages">
-                <div class="pkg" onclick="selectPkg(this,'ANDRO 1H - 15K')">1H - 15K</div>
-                <div class="pkg" onclick="selectPkg(this,'ANDRO 3H - 30K')">3H - 30K</div>
-                <div class="pkg" onclick="selectPkg(this,'ANDRO 7H - 50K')">7H - 50K</div>
-                <div class="pkg" onclick="selectPkg(this,'ANDRO 15H - 80K')">15H - 80K</div>
-                <div class="pkg" onclick="selectPkg(this,'ANDRO 30H - 140K')">30H - 140K</div>
-            </div>
-        </div>
-
-    </div>
-
-    <button class="buy" onclick="openBuy()">BELI SEKARANG</button>
+<div class="tabs">
+<span class="tab active" onclick="switchTab('pc',this)">KALZ PC</span>
+<span class="tab" onclick="switchTab('andro',this)">KALZ ANDRO</span>
 </div>
 
-<!-- POPUP -->
-<div id="buyPopup">
-    <h3>Pilih Metode</h3>
-    <button class="popup-btn wa" onclick="buyWA()">🟢 Beli lewat WhatsApp</button>
-    <button class="popup-btn dc" onclick="buyDC()">🔵 Beli lewat Discord</button>
+<div id="pc" class="cards active">
+<div class="product-card">
+<h3>REMOTE PANEL PC</h3>
+<div class="price">Rp 10K - 110K</div>
+<ul>
+<li>aimhead</li>
+<li>aimdrag</li>
+<li>aimneck</li>
+<li>esp menu</li>
+</ul>
+<button class="buy" onclick="openPay()">BELI</button>
+</div>
+</div>
+
+<div id="andro" class="cards">
+<div class="product-card">
+<h3>REMOTE PANEL ANDRO</h3>
+<div class="price">Rp 15K - 140K</div>
+<ul>
+<li>badan headshot</li>
+<li>leher headshot</li>
+<li>dada headshot</li>
+<li>aim silent</li>
+</ul>
+<button class="buy" onclick="openPay()">BELI</button>
+</div>
+</div>
+
+</section>
+
+<!-- POPUPS tetap sama (tidak diubah biar stabil) -->
+<div id="payPopup" class="popup">
+<div class="popup-box">
+<div class="close-pop" onclick="closeAll()">✖</div>
+<h2>PILIH ACCES PEMBAYARAN</h2>
+<div class="pay wa" onclick="openPkg()">Beli di WhatsApp</div>
+<div class="pay dc" onclick="goDC()">Beli di Discord</div>
+</div>
+</div>
+
+<div id="pkgPopup" class="popup">
+<div class="popup-box">
+<div class="close-pop" onclick="closeAll()">✖</div>
+<h2>Pilih Product</h2>
+
+<div class="pkg" onclick="selectPkg(this,'1H - 10K')">1H - 10K</div>
+<div class="pkg" onclick="selectPkg(this,'3H - 25K')">3H - 25K</div>
+<div class="pkg" onclick="selectPkg(this,'7H - 45K')">7H - 45K</div>
+<div class="pkg" onclick="selectPkg(this,'15H - 60K')">15H - 60K</div>
+<div class="pkg" onclick="selectPkg(this,'30H - 110K')">30H - 110K</div>
+
+<button class="next" onclick="sendWA()">Lanjut Pembayaran</button>
+</div>
 </div>
 
 <script>
-let selectedPackage="";
+let selected="";
 
-function toggleMenu(){
-    sideMenu.classList.toggle("active");
-    overlay.classList.toggle("active");
+function openMenu(){
+    sidebar.classList.add("active");
+    overlay.classList.add("active");
 }
 
 function closeAll(){
-    sideMenu.classList.remove("active");
+    sidebar.classList.remove("active");
     overlay.classList.remove("active");
-    buyPopup.classList.remove("active");
+    payPopup.classList.remove("active");
+    pkgPopup.classList.remove("active");
 }
 
-function openPanel(){
-    landing.style.opacity="0";
+function goPanel(){
+    closeAll();
+    hero.classList.add("hide");
     setTimeout(()=>{
-        landing.style.display="none";
+        hero.style.display="none";
         panel.classList.add("active");
     },300);
 }
 
 function goHome(){
+    closeAll();
     panel.classList.remove("active");
-    setTimeout(()=>{
-        landing.style.display="block";
-        setTimeout(()=>landing.style.opacity="1",10);
-    },300);
+    hero.style.display="block";
+    setTimeout(()=>hero.classList.remove("hide"),10);
 }
 
-/* 🔥 SMOOTH TAB SWITCH */
 function switchTab(tab,el){
-    document.querySelectorAll('.cat').forEach(c=>c.classList.remove('active-tab'));
-    el.classList.add('active-tab');
+    document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+    el.classList.add('active');
 
-    document.querySelectorAll('.tab').forEach(t=>{
-        t.classList.remove('active');
-    });
+    document.querySelectorAll('.cards').forEach(c=>c.classList.remove('active'));
+    document.getElementById(tab).classList.add('active');
+}
 
-    setTimeout(()=>{
-        document.getElementById(tab).classList.add('active');
-    },50);
+function openPay(){
+    overlay.classList.add("active");
+    payPopup.classList.add("active");
+}
+
+function openPkg(){
+    payPopup.classList.remove("active");
+    pkgPopup.classList.add("active");
 }
 
 function selectPkg(el,pkg){
     document.querySelectorAll('.pkg').forEach(p=>p.classList.remove('selected'));
     el.classList.add('selected');
-    selectedPackage=pkg;
+    selected=pkg;
 }
 
-function openBuy(){
-    if(!selectedPackage){
-        alert("Pilih paket dulu!");
-        return;
-    }
-    overlay.classList.add("active");
-    buyPopup.classList.add("active");
+function sendWA(){
+    if(!selected){alert("Pilih paket dulu!");return;}
+    let msg=encodeURIComponent("Halo Min Kall, Saya Ingin Memesan Kalz Remote Panel Emulator PC Yang "+selected);
+    window.open("https://wa.me/6281284654872?text="+msg);
 }
 
-function buyWA(){
-    let nomor="6281284654872";
-    let pesan=encodeURIComponent("Halo, saya mau beli "+selectedPackage);
-    window.open("https://wa.me/"+nomor+"?text="+pesan,"_blank");
-}
-
-function buyDC(){
-    window.open("https://discord.gg/pZgGKyzp3","_blank");
+function goDC(){
+    window.open("https://discord.gg/d7MnEbzj");
 }
 </script>
 
