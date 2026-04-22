@@ -16,188 +16,159 @@ body{
 }
 
 /* NAV */
-.nav{
-    display:flex;
-    justify-content:space-between;
-    padding:20px;
-}
-.logo{
-    font-family:'Orbitron';
-    color:#60a5fa;
-}
-.menu-btn{
-    font-size:22px;
-    cursor:pointer;
-}
+.nav{display:flex;justify-content:space-between;padding:20px;}
+.logo{font-family:'Orbitron';color:#60a5fa;}
+.menu-btn{font-size:22px;cursor:pointer;}
 
 /* OVERLAY */
 #overlay{
-    position:fixed;
-    inset:0;
-    background:rgba(0,0,0,0.6);
-    opacity:0;
-    pointer-events:none;
-    transition:.3s;
-    z-index:5;
+    position:fixed;inset:0;background:rgba(0,0,0,0.6);
+    opacity:0;pointer-events:none;transition:.3s;z-index:5;
 }
-#overlay.active{
-    opacity:1;
-    pointer-events:auto;
-}
+#overlay.active{opacity:1;pointer-events:auto;}
 
 /* SIDEBAR */
 .sidebar{
-    position:fixed;
-    top:0;
-    right:-280px;
-    width:280px;
-    height:100%;
-    background:#0b1224;
-    transition:.3s;
-    z-index:10;
+    position:fixed;top:0;right:-280px;width:280px;height:100%;
+    background:#0b1224;transition:.3s;z-index:10;
 }
 .sidebar.active{right:0;}
-
-.side-top{
-    padding:20px;
-    border-bottom:1px solid #1e3a8a;
-    position:relative;
-}
-.close{
-    position:absolute;
-    right:15px;
-    top:15px;
-    cursor:pointer;
-}
-.menu{
-    padding:20px;
-}
-.item{
-    padding:12px;
-    border-radius:10px;
-    cursor:pointer;
-}
+.side-top{padding:20px;border-bottom:1px solid #1e3a8a;position:relative;}
+.close{position:absolute;right:15px;top:15px;cursor:pointer;}
+.menu{padding:20px;}
+.item{padding:12px;border-radius:10px;cursor:pointer;transition:.2s;}
 .item:hover{background:#1e3a8a;}
 
 /* HERO */
-.hero{
-    text-align:center;
-    padding:100px 20px;
-    transition:.4s;
-}
-.hero.hide{
-    opacity:0;
-    transform:translateY(-20px);
-}
+.hero{text-align:center;padding:100px 20px;transition:.4s;}
+.hero.hide{opacity:0;transform:translateY(-20px);}
 
 .title span{
-    font-size:70px;
-    font-family:'Orbitron';
-    color:white;
-    transition:.3s;
+    font-size:70px;font-family:'Orbitron';color:white;transition:.3s;
 }
-.title span.active{
-    color:#3b82f6;
-}
+.title span.active{color:#3b82f6;}
 
-.sub{
-    color:#8faaff;
-    margin-top:10px;
-}
+.sub{color:#8faaff;margin-top:10px;}
 
 .btn{
-    margin-top:30px;
-    padding:14px 35px;
-    border:none;
-    border-radius:30px;
-    background:#3b82f6;
-    color:white;
-    cursor:pointer;
+    margin-top:30px;padding:14px 35px;border:none;border-radius:30px;
+    background:#3b82f6;color:white;cursor:pointer;
     transition:.2s;
 }
-.btn:hover{transform:scale(1.05);}
-.btn:active{transform:scale(0.95);}
+.btn:hover{
+    transform:translateY(-2px);
+    box-shadow:0 0 15px rgba(59,130,246,0.6);
+}
 
 /* PANEL */
 #panel{
-    padding:30px;
+    padding:40px 20px;
     opacity:0;
     transform:translateY(20px);
     pointer-events:none;
     transition:.4s;
+    background:radial-gradient(circle at top,#1a1200,#05070d 70%);
 }
-#panel.active{
-    opacity:1;
-    transform:translateY(0);
-    pointer-events:auto;
-}
+#panel.active{opacity:1;transform:translateY(0);pointer-events:auto;}
 
-.tabs{
+/* TITLE */
+.vip-title{
     text-align:center;
-}
-.tab{
-    display:inline-block;
-    padding:10px 20px;
-    border:1px solid #3b82f6;
-    margin:5px;
-    border-radius:20px;
-    cursor:pointer;
-}
-.tab.active{
-    background:#3b82f6;
+    font-family:'Orbitron';
+    font-size:34px;
+    margin-bottom:25px;
+    background: linear-gradient(90deg,#fff,#ffd700,#fff);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
 }
 
+/* TABS */
+.tabs{display:flex;justify-content:center;gap:12px;margin-bottom:20px;}
+.tab{
+    padding:10px 20px;border-radius:20px;cursor:pointer;
+    background:rgba(255,215,0,0.1);
+    border:1px solid rgba(255,215,0,0.4);
+    color:#ffd700;
+    transition:.2s;
+}
+.tab:hover{transform:translateY(-2px);}
+.tab.active{
+    background:linear-gradient(90deg,#ffd700,#ffcc00);
+    color:black;
+    box-shadow:0 0 20px rgba(255,215,0,0.9);
+}
+
+/* CARDS */
 .cards{
     display:none;
     justify-content:center;
-    margin-top:30px;
+    gap:25px;
+    flex-wrap:wrap;
+    margin-top:40px;
 }
-.cards.active{
-    display:flex;
-}
+.cards.active{display:flex;}
 
 .card{
-    width:300px;
-    padding:20px;
-    border:1px solid #3b82f6;
-    border-radius:15px;
+    width:320px;
+    padding:25px;
+    border-radius:18px;
+    background:linear-gradient(180deg,#1a1200,#0a0f1f);
+    border:1px solid rgba(255,215,0,0.25);
+    position:relative;
+    overflow:hidden;
+    transition:.3s;
+}
+.card::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:radial-gradient(circle at top,
+        rgba(255,215,0,0.25),
+        transparent 70%);
+    opacity:0;
+    transition:.3s;
+    pointer-events:none;
+}
+.card:hover::before{opacity:1;}
+.card:hover{
+    transform:translateY(-8px);
+    box-shadow:0 0 30px rgba(255,215,0,0.25);
 }
 
+/* TEXT */
+.card h3{font-family:'Orbitron';}
 .price{
-    color:#60a5fa;
-    margin:10px 0;
+    font-size:26px;
+    margin:15px 0;
+    color:#ffd700;
 }
 
+/* BUTTON */
 .buy{
     width:100%;
     margin-top:15px;
     padding:12px;
     border:none;
-    border-radius:10px;
-    background:#3b82f6;
-    color:white;
+    border-radius:12px;
+    background:linear-gradient(90deg,#ffd700,#ffcc00);
+    color:black;
     cursor:pointer;
 }
 
-/* POPUP */
+/* ===== POPUP GOLD ===== */
 .popup{
-    position:fixed;
-    inset:0;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    opacity:0;
-    pointer-events:none;
-    transition:.3s;
-    z-index:20;
+    position:fixed;inset:0;
+    display:flex;justify-content:center;align-items:center;
+    opacity:0;pointer-events:none;
+    transition:.3s;z-index:20;
 }
-.popup.active{
-    opacity:1;
-    pointer-events:auto;
-}
+.popup.active{opacity:1;pointer-events:auto;}
 
 .box{
-    background:#111827;
+    background:linear-gradient(180deg,#2a2000,#111827);
+    border:1px solid rgba(255,215,0,0.3);
+    box-shadow:0 0 25px rgba(255,215,0,0.25);
+
     padding:20px;
     border-radius:15px;
     width:280px;
@@ -205,44 +176,51 @@ body{
     position:relative;
 }
 
-/* 🔥 CLOSE X */
-.close-popup{
-    position:absolute;
-    right:12px;
-    top:10px;
-    cursor:pointer;
-    font-size:18px;
-    color:#9ca3af;
-}
-.close-popup:hover{color:white;}
+.close-popup{position:absolute;right:12px;top:10px;cursor:pointer;color:#ffd700;}
 
-.option{
+.option,.pkg{
     margin-top:10px;
     padding:12px;
-    border:1px solid #3b82f6;
+    border:1px solid rgba(255,215,0,0.5);
     border-radius:10px;
     cursor:pointer;
+    transition:.2s;
 }
-.option:hover{background:#1e3a8a;}
-
-.pkg{
-    margin-top:8px;
-    padding:10px;
-    border:1px solid #3b82f6;
-    border-radius:8px;
-    cursor:pointer;
+.option:hover,.pkg:hover{
+    background:rgba(255,215,0,0.2);
 }
-.pkg.active{background:#3b82f6;}
 
+.pkg.active{
+    background:#ffd700;
+    color:black;
+}
+
+/* NEXT BUTTON */
 .next{
     margin-top:15px;
     padding:12px;
     width:100%;
-    background:#22c55e;
+    background:linear-gradient(90deg,#ffd700,#ffcc00);
     border:none;
     border-radius:10px;
-    color:white;
+    color:black;
     cursor:pointer;
+}
+
+/* RIPPLE */
+.btn,.buy,.tab,.option,.pkg,.item{
+    position:relative;
+    overflow:hidden;
+}
+.ripple{
+    position:absolute;
+    border-radius:50%;
+    transform:scale(0);
+    background:rgba(255,255,255,0.4);
+    animation:rippleAnim .5s linear;
+}
+@keyframes rippleAnim{
+    to{transform:scale(4);opacity:0;}
 }
 </style>
 </head>
@@ -251,25 +229,11 @@ body{
 
 <div id="overlay" onclick="closeAll()"></div>
 
-<!-- NAV -->
 <div class="nav">
 <div class="logo">KALZX</div>
 <div class="menu-btn" onclick="openMenu()">☰</div>
 </div>
 
-<!-- SIDEBAR -->
-<div id="sidebar" class="sidebar">
-<div class="side-top">
-KALZX
-<div class="close" onclick="closeAll()">✖</div>
-</div>
-<div class="menu">
-<div class="item" onclick="goHome()">Home</div>
-<div class="item" onclick="goPanel()">List Cheat</div>
-</div>
-</div>
-
-<!-- HERO -->
 <div id="hero" class="hero">
 <div class="title">
 <span>K</span><span>A</span><span>L</span><span>Z</span><span>X</span>
@@ -278,49 +242,9 @@ KALZX
 <button class="btn" onclick="goPanel()">LIHAT CHEAT</button>
 </div>
 
-<!-- PANEL -->
-<!-- IMPORT FONT -->
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;800&display=swap" rel="stylesheet">
-
-<!-- PANEL -->
 <div id="panel">
-  <h2 class="vip-title">Panel VIP</h2>
-</div>
+<h2 class="vip-title">Panel VIP</h2>
 
-<style>
-#panel {
-    padding: 20px;
-}
-
-/* TEXT STYLE */
-.vip-title {
-    text-align: center;
-    font-family: 'Poppins', sans-serif;
-    font-weight: 800;
-    font-size: 32px;
-    letter-spacing: 2px;
-
-    /* GRADIENT TEXT */
-    background: linear-gradient(90deg, #ffffff, #ffd700, #ffffff);
-    background-size: 200% auto;
-
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-
-    /* ANIMASI */
-    animation: shine 3s linear infinite;
-}
-
-/* ANIMASI GERAK WARNA */
-@keyframes shine {
-    0% {
-        background-position: 200% center;
-    }
-    100% {
-        background-position: -200% center;
-    }
-}
-</style>
 <div class="tabs">
 <div class="tab active" onclick="switchTab('pc',this)">KALZ PC</div>
 <div class="tab" onclick="switchTab('andro',this)">KALZ ANDRO</div>
@@ -353,10 +277,9 @@ KALZX
 <button class="buy" onclick="openPay('ANDRO')">BELI</button>
 </div>
 </div>
-
 </div>
 
-<!-- POPUP PEMBAYARAN -->
+<!-- POPUP -->
 <div id="pay" class="popup">
 <div class="box">
 <div class="close-popup" onclick="closeAll()">✖</div>
@@ -366,7 +289,6 @@ KALZX
 </div>
 </div>
 
-<!-- POPUP PAKET -->
 <div id="pkg" class="popup">
 <div class="box">
 <div class="close-popup" onclick="closeAll()">✖</div>
@@ -383,40 +305,18 @@ KALZX
 <script>
 let selected="",type="";
 
-/* animasi huruf */
-let letters=document.querySelectorAll('.title span');
-let i=0;
-setInterval(()=>{
-    letters.forEach(l=>l.classList.remove('active'));
-    letters[i].classList.add('active');
-    i=(i+1)%letters.length;
-},500);
-
-/* menu */
 function openMenu(){sidebar.classList.add("active");overlay.classList.add("active");}
 function closeAll(){
-    sidebar.classList.remove("active");
     overlay.classList.remove("active");
     pay.classList.remove("active");
     pkg.classList.remove("active");
 }
 
-/* nav */
 function goPanel(){
-    hero.classList.add("hide");
-    setTimeout(()=>{
-        hero.style.display="none";
-        panel.classList.add("active");
-    },300);
-}
-function goHome(){
-    panel.classList.remove("active");
-    hero.style.display="block";
-    setTimeout(()=>hero.classList.remove("hide"),10);
-    closeAll();
+    hero.style.display="none";
+    panel.classList.add("active");
 }
 
-/* tab */
 function switchTab(tab,el){
     document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
     el.classList.add('active');
@@ -424,29 +324,48 @@ function switchTab(tab,el){
     document.getElementById(tab).classList.add('active');
 }
 
-/* buy */
 function openPay(t){
     type=t;
     overlay.classList.add("active");
     pay.classList.add("active");
 }
+
 function openPkg(){
     pay.classList.remove("active");
     pkg.classList.add("active");
 }
+
 function pick(el,val){
     document.querySelectorAll('.pkg').forEach(p=>p.classList.remove('active'));
     el.classList.add('active');
     selected=val;
 }
+
 function sendWA(){
     if(!selected){alert("Pilih paket dulu!");return;}
     let msg="Halo Min Kall, Saya ingin membeli "+type+" "+selected;
     window.open("https://wa.me/6281284654872?text="+encodeURIComponent(msg));
 }
+
 function goDC(){
     window.open("https://discord.gg/d7MnEbzj");
 }
+
+/* RIPPLE */
+document.querySelectorAll('.btn,.buy,.tab,.option,.pkg,.item').forEach(el=>{
+    el.addEventListener('click',function(e){
+        let circle=document.createElement("span");
+        let d=Math.max(this.clientWidth,this.clientHeight);
+        let r=d/2;
+        circle.style.width=circle.style.height=d+"px";
+        circle.style.left=e.clientX-this.getBoundingClientRect().left-r+"px";
+        circle.style.top=e.clientY-this.getBoundingClientRect().top-r+"px";
+        circle.classList.add("ripple");
+        let ripple=this.getElementsByClassName("ripple")[0];
+        if(ripple) ripple.remove();
+        this.appendChild(circle);
+    });
+});
 </script>
 
 </body>
