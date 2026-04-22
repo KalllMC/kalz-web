@@ -279,9 +279,48 @@ KALZX
 </div>
 
 <!-- PANEL -->
-<div id="panel">
-<h2 style="text-align:center;">Panel VIP</h2>
+<!-- IMPORT FONT -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;800&display=swap" rel="stylesheet">
 
+<!-- PANEL -->
+<div id="panel">
+  <h2 class="vip-title">Panel VIP</h2>
+</div>
+
+<style>
+#panel {
+    padding: 20px;
+}
+
+/* TEXT STYLE */
+.vip-title {
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 800;
+    font-size: 32px;
+    letter-spacing: 2px;
+
+    /* GRADIENT TEXT */
+    background: linear-gradient(90deg, #ffffff, #ffd700, #ffffff);
+    background-size: 200% auto;
+
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    /* ANIMASI */
+    animation: shine 3s linear infinite;
+}
+
+/* ANIMASI GERAK WARNA */
+@keyframes shine {
+    0% {
+        background-position: 200% center;
+    }
+    100% {
+        background-position: -200% center;
+    }
+}
+</style>
 <div class="tabs">
 <div class="tab active" onclick="switchTab('pc',this)">KALZ PC</div>
 <div class="tab" onclick="switchTab('andro',this)">KALZ ANDRO</div>
