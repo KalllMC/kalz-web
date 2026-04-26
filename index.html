@@ -1,447 +1,317 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>KALZX</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KALZX | Elite Premium Panel</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
-<style>
-body{
-    margin:0;
-    font-family:'Poppins',sans-serif;
-    background:linear-gradient(180deg,#05070d,#0a0f1f,#05070d);
-    color:#d6e4ff;
-}
+    <style>
+        :root {
+            --primary: #3b82f6;
+            --accent: #ffd700;
+            --bg-dark: #05070d;
+            --transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+        }
 
-/* NAV */
-.nav{
-    display:flex;
-    justify-content:space-between;
-    padding:20px;
-    position:relative;
-    z-index:999;
-}
-.logo{font-family:'Orbitron';color:#60a5fa;}
-.menu-btn{font-size:22px;cursor:pointer;}
+        body {
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+            background: #05070d;
+            color: #d6e4ff;
+            overflow-x: hidden;
+            position: relative;
+        }
 
-/* OVERLAY */
-#overlay{
-    position:fixed;
-    inset:0;
-    background:rgba(0,0,0,0.6);
-    opacity:0;
-    pointer-events:none;
-    transition:.3s;
-    z-index:100;
-}
-#overlay.active{opacity:1;pointer-events:auto;}
+        /* --- BACKGROUND PARTICLES --- */
+        canvas#particles {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: -1;
+            background: radial-gradient(circle at center, #0a1128 0%, #05070d 100%);
+        }
 
-/* SIDEBAR */
-.sidebar{
-    position:fixed;
-    top:0;
-    right:-280px;
-    width:280px;
-    height:100%;
-    background:#0b1224;
-    transition:.3s;
-    z-index:1000;
-}
-.sidebar.active{right:0;}
+        /* --- NAVIGATION --- */
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 6%;
+            backdrop-filter: blur(15px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(5, 7, 13, 0.7);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
 
-.side-top{padding:20px;border-bottom:1px solid #1e3a8a;position:relative;}
-.close{position:absolute;right:15px;top:15px;cursor:pointer;}
-.menu{padding:20px;}
-.item{
-    padding:12px;
-    border-radius:10px;
-    cursor:pointer;
-    transition:.2s;
-}
-.item:hover{
-    background:#1e3a8a;
-    box-shadow:0 0 10px rgba(59,130,246,0.5);
-}
+        .logo { font-family: 'Orbitron'; font-size: 1.5rem; letter-spacing: 2px; color: white; }
+        .menu-btn { font-size: 28px; cursor: pointer; transition: 0.3s; }
 
-/* HERO */
-.hero{
-    text-align:center;
-    padding:100px 20px;
-    transition:.3s;
-}
-.title span{
-    font-size:70px;
-    font-family:'Orbitron';
-    color:white;
-}
-.sub{color:#8faaff;margin-top:10px;}
+        /* --- HERO SECTION --- */
+        .hero { text-align: center; padding: 150px 20px; transition: var(--transition); }
+        .hero.hide { opacity: 0; transform: translateY(-30px); pointer-events: none; position: absolute; width: 100%; }
 
-.btn{
-    margin-top:30px;
-    padding:14px 35px;
-    border:none;
-    border-radius:30px;
-    background:#3b82f6;
-    color:white;
-    cursor:pointer;
-    transition:.3s;
-}
-.btn:hover{
-    transform:translateY(-3px);
-    box-shadow:0 0 15px rgba(59,130,246,0.7);
-}
+        .title span {
+            font-size: clamp(50px, 12vw, 100px);
+            font-family: 'Orbitron'; font-weight: 900; display: inline-block;
+            margin: 0 5px; animation: glow 2s ease-in-out infinite alternate;
+        }
 
-/* PANEL */
-#panel{
-    padding:40px 20px;
-    display:none;
-    opacity:0;
-    transform:translateY(10px);
-    transition:.3s;
-}
-#panel.show{
-    opacity:1;
-    transform:translateY(0);
-}
+        @keyframes glow {
+            from { text-shadow: 0 0 10px rgba(59,130,246,0.3); }
+            to { text-shadow: 0 0 40px rgba(59,130,246,0.8); color: white; }
+        }
 
-/* CLICK ANIMATION */
-button,.item,.tab,.option,.pkg{
-    transition:.2s;
-}
-button:active,
-.item:active,
-.tab:active,
-.option:active,
-.pkg:active{
-    transform:scale(0.96);
-    filter:brightness(1.2);
-}
+        .btn-main {
+            margin-top: 40px; padding: 18px 50px; border: none; border-radius: 50px;
+            background: var(--primary); color: white; font-weight: 700; cursor: pointer;
+            transition: var(--transition); box-shadow: 0 10px 20px rgba(59,130,246,0.3);
+            text-transform: uppercase; letter-spacing: 2px;
+        }
+        .btn-main:hover { transform: translateY(-5px); box-shadow: 0 15px 35px rgba(59,130,246,0.5); }
 
-/* TITLE */
-.vip-title{
-    text-align:center;
-    font-family:'Orbitron';
-    font-size:34px;
-    margin-bottom:25px;
-    background: linear-gradient(90deg,#fff,#ffd700,#fff);
-    -webkit-background-clip:text;
-    -webkit-text-fill-color:transparent;
-}
+        /* --- PANEL SECTION --- */
+        #panel { display: none; padding: 50px 5% 100px; opacity: 0; transform: translateY(20px); transition: var(--transition); }
+        #panel.active { display: block; opacity: 1; transform: translateY(0); }
 
-/* TABS */
-.tabs{display:flex;justify-content:center;gap:12px;margin-bottom:20px;}
-.tab{
-    padding:10px 20px;
-    border-radius:20px;
-    cursor:pointer;
-    background:rgba(255,215,0,0.1);
-    border:1px solid rgba(255,215,0,0.4);
-    color:#ffd700;
-    transition:.2s;
-}
-.tab.active{
-    background:linear-gradient(90deg,#ffd700,#ffcc00);
-    color:black;
-    box-shadow:0 0 15px rgba(255,215,0,0.6);
-}
+        .tabs { display: flex; justify-content: center; gap: 15px; margin-bottom: 50px; }
+        .tab {
+            padding: 14px 30px; border-radius: 12px; cursor: pointer;
+            background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+            transition: var(--transition); color: #94a3b8;
+        }
+        .tab.active { background: var(--accent); color: black; font-weight: 700; box-shadow: 0 0 25px rgba(255,215,0,0.3); transform: scale(1.05); }
 
-/* CARD */
-.cards{
-    display:none;
-    justify-content:center;
-    gap:25px;
-    flex-wrap:wrap;
-}
-.cards.active{display:flex;}
+        .cards { display: none; justify-content: center; gap: 40px; flex-wrap: wrap; }
+        .cards.active { display: flex; animation: slideUp 0.6s ease forwards; }
 
-.card{
-    width:340px;
-    padding:30px;
-    border-radius:20px;
-    background:linear-gradient(180deg,#2a2000,#0a0f1f);
-    border:1px solid rgba(255,215,0,0.4);
-    position:relative;
-    overflow:hidden;
-    box-shadow:0 0 30px rgba(255,215,0,0.15);
-    transition:.3s;
-}
-.card:hover{
-    transform:translateY(-8px);
-    box-shadow:0 0 40px rgba(255,215,0,0.3);
-}
+        @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
 
-.card::after{
-    content:"";
-    position:absolute;
-    inset:0;
-    background-image:linear-gradient(rgba(255,255,255,0.03) 1px,transparent 1px),
-                     linear-gradient(90deg,rgba(255,255,255,0.03) 1px,transparent 1px);
-    background-size:20px 20px;
-    pointer-events:none;
-}
+        /* --- CLEAN PRODUCT CARD --- */
+        .card {
+            width: 350px;
+            background: rgba(15, 23, 42, 0.6);
+            border-radius: 30px;
+            padding: 40px;
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: var(--transition);
+            backdrop-filter: blur(5px);
+        }
 
-/* BADGE */
-.badge{
-    position:absolute;
-    top:15px;
-    right:15px;
-    background:#ffd700;
-    color:black;
-    padding:5px 10px;
-    border-radius:20px;
-    font-size:12px;
-}
+        .card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            background: rgba(15, 23, 42, 0.8);
+        }
 
-.card h3{
-    font-family:'Orbitron';
-    font-size:26px;
-    margin-top:40px;
-}
+        .card h3 { font-family: 'Orbitron'; color: white; margin: 0; font-size: 1.4rem; }
+        .price-list { font-size: 0.75rem; color: #64748b; margin-top: 8px; line-height: 1.4; display: block; }
+        .price-main { font-size: 2.2rem; font-weight: 800; color: var(--accent); margin: 25px 0; display: block; }
 
-/* PRICE */
-.price-list{
-    margin:20px 0;
-    line-height:1.8;
-    color:#ffd700;
-}
+        .features li { padding: 10px 0; color: #94a3b8; font-size: 0.9rem; list-style: none; border-bottom: 1px solid rgba(255,255,255,0.03); }
+        .features li::before { content: "✓ "; color: var(--primary); font-weight: bold; }
 
-/* BUTTON */
-.buy{
-    width:100%;
-    margin-top:15px;
-    padding:12px;
-    border:none;
-    border-radius:12px;
-    background:linear-gradient(90deg,#ffd700,#ffcc00);
-    color:black;
-    cursor:pointer;
-    transition:.3s;
-}
-.buy:hover{
-    transform:translateY(-3px);
-    box-shadow:0 0 20px rgba(255,215,0,0.7);
-}
+        .btn-buy {
+            width: 100%; padding: 16px; border: none; border-radius: 16px;
+            background: linear-gradient(90deg, #ffd700, #ffae00);
+            color: black; font-weight: 800; cursor: pointer; transition: 0.3s;
+            margin-top: 10px;
+        }
 
-/* POPUP */
-.popup{
-    position:fixed;inset:0;
-    display:flex;justify-content:center;align-items:center;
-    opacity:0;pointer-events:none;
-    transition:.3s;
-    z-index:200;
-}
-.popup.active{opacity:1;pointer-events:auto;}
+        /* --- SIDEBAR --- */
+        .sidebar { position: fixed; top: 0; right: -320px; width: 320px; height: 100%; background: #080c16; transition: var(--transition); z-index: 1100; padding: 60px 25px; box-sizing: border-box; }
+        .sidebar.active { right: 0; }
+        .menu-item { cursor: pointer; padding: 18px; background: rgba(255,255,255,0.03); border-radius: 15px; margin-bottom: 10px; transition: 0.3s; opacity: 0; transform: translateX(20px); }
+        .sidebar.active .menu-item { opacity: 1; transform: translateX(0); }
+        .menu-item:hover { background: var(--primary); color: white; padding-left: 25px; }
 
-.box{
-    background:linear-gradient(180deg,#2a2000,#111827);
-    border:1px solid rgba(255,215,0,0.4);
-    box-shadow:0 0 25px rgba(255,215,0,0.3);
-    padding:20px;border-radius:15px;width:280px;text-align:center;
-    position:relative;
-}
+        .popup { position: fixed; inset: 0; display: flex; justify-content: center; align-items: center; opacity: 0; pointer-events: none; background: rgba(0,0,0,0.85); backdrop-filter: blur(10px); transition: 0.3s; z-index: 2000; }
+        .popup.active { opacity: 1; pointer-events: auto; }
+        .box { background: #0f172a; border: 1px solid rgba(255,215,0,0.2); padding: 40px; border-radius: 30px; width: 340px; text-align: center; position: relative; }
+        .btn-x { position: absolute; top: 20px; right: 20px; cursor: pointer; color: #ff4444; font-weight: bold; }
 
-/* NEW CLOSE BUTTON */
-.close-popup{
-    position:absolute;
-    top:10px;
-    right:12px;
-    cursor:pointer;
-    font-size:18px;
-    color:#ffd700;
-}
-.close-popup:hover{
-    color:white;
-}
-
-.option,.pkg{
-    margin-top:10px;
-    padding:12px;
-    border:1px solid gold;
-    border-radius:10px;
-    cursor:pointer;
-}
-.pkg.active{
-    background:#ffd700;
-    color:black;
-}
-</style>
+        #overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); display: none; z-index: 900; }
+        .ripple { position: absolute; background: rgba(255,255,255,0.4); border-radius: 50%; transform: scale(0); animation: r 0.6s linear; pointer-events: none; }
+        @keyframes r { to { transform: scale(4); opacity: 0; } }
+    </style>
 </head>
-
 <body>
 
+<canvas id="particles"></canvas>
 <div id="overlay" onclick="closeAll()"></div>
 
-<div class="nav">
-<div class="logo">KALZX</div>
-<div class="menu-btn" onclick="openMenu()">☰</div>
+<div class="sidebar" id="side">
+    <div class="btn-x" onclick="closeAll()">✕</div>
+    <h3 style="font-family:'Orbitron'; color:white; margin-bottom:40px;">KALZX PANEL</h3>
+    <div class="menu-item" style="transition-delay: 0.1s;" onclick="location.reload()">Beranda Utama</div>
+    <div class="menu-item" style="transition-delay: 0.2s;" onclick="goPanel(); closeAll();">Katalog Cheat</div>
+    <div class="menu-item" style="transition-delay: 0.3s; color: #7289da;" onclick="window.open('https://discord.gg/d7MnEbzj')">Join Discord</div>
+    <div class="menu-item" style="transition-delay: 0.4s; color: #25d366;" onclick="window.open('https://wa.me/6281284654872')">Hubungi Admin</div>
 </div>
 
-<div id="sidebar" class="sidebar">
-<div class="side-top">
-Menu
-<div class="close" onclick="closeAll()">✖</div>
-</div>
-<div class="menu">
-<div class="item" onclick="goHome()">Home</div>
-<div class="item" onclick="goPanel()">List Cheat</div>
-</div>
-</div>
+<nav class="nav">
+    <div class="logo">KALZX</div>
+    <div class="menu-btn" onclick="openSide()">☰</div>
+</nav>
 
 <div id="hero" class="hero">
-<div class="title">
-<span>K</span><span>A</span><span>L</span><span>Z</span><span>X</span>
-</div>
-<div class="sub">premium panel smooth & safe</div>
-<button class="btn" onclick="goPanel()">LIHAT CHEAT</button>
+    <div class="title">
+        <span>K</span><span>A</span><span>L</span><span>Z</span><span>X</span>
+    </div>
+    <p style="color:#94a3b8; font-size:1.2rem; margin-top:15px; letter-spacing:1px;">Elite Undetected Tools for Professional Gamers.</p>
+    <button class="btn-main" onclick="goPanel()">Lihat Cheat</button>
 </div>
 
 <div id="panel">
-<h2 class="vip-title">Panel VIP</h2>
+    <h2 style="text-align:center; font-family:'Orbitron'; color:white; margin-bottom:50px;">PREMIUM PANEL</h2>
+    
+    <div class="tabs">
+        <div class="tab active" onclick="switchTab('pc', this)">WINDOWS PC</div>
+        <div class="tab" onclick="switchTab('andro', this)">ANDROID</div>
+    </div>
 
-<div class="tabs">
-<div class="tab active" onclick="switchTab('pc',this)">KALZ PC</div>
-<div class="tab" onclick="switchTab('andro',this)">KALZ ANDRO</div>
+    <div id="pc" class="cards active">
+        <div class="card">
+            <h3>REMOTE PANEL PC</h3>
+            <span class="price-list">1h 10k, 3h 25k, 7h 45k, 15h 60k, 30h 110k</span>
+            <span class="price-main">10K - 110K</span>
+            <ul class="features">
+                <li>Smooth Aimlock Head</li>
+                <li>Smooth Aimdrag</li>
+                <li>Smooth Aimlock Neck</li>
+                <li>Bypass Server Side</li>
+            </ul>
+            <button class="btn-buy" onclick="openPay('PC')">ORDER ACCESS</button>
+        </div>
+    </div>
+
+    <div id="andro" class="cards">
+        <div class="card">
+            <h3>REMOTE PANEL ANDROID</h3>
+            <span class="price-list">1h 15k, 3h 30k, 7h 55k, 15h 70k, 30h 130k</span>
+            <span class="price-main">15K - 130K</span>
+            <ul class="features">
+                <li>Badan Headshot</li>
+                <li>Dada Headshot</li>
+                <li>Leher Headshot</li>
+                <li>AimSilent</li>
+                <li>Support No Root & Root</li>
+
+            </ul>
+            <button class="btn-buy" onclick="openPay('ANDROID')">ORDER ACCESS</button>
+        </div>
+    </div>
 </div>
 
-<div id="pc" class="cards active">
-<div class="card">
-<div class="badge">TERPOPULER</div>
-<h3>REMOTE PANEL PC</h3>
-
-<div class="price-list">
-1H - 10K<br>
-3H - 25K<br>
-7H - 45K<br>
-15H - 60K<br>
-30H - 110K
+<div id="payPop" class="popup">
+    <div class="box">
+        <div class="btn-x" onclick="closeAll()">✕</div>
+        <h3 style="font-family:'Orbitron'; margin-bottom:30px;">PEMBAYARAN</h3>
+        <div class="menu-item" style="opacity:1; transform:none;" onclick="openPkg()">WhatsApp Admin</div>
+        <div class="menu-item" style="opacity:1; transform:none;" onclick="window.open('https://discord.gg/d7MnEbzj')">Discord Server</div>
+    </div>
 </div>
 
-<ul>
-<li>AimHead</li>
-<li>AimDrag</li>
-<li>AimNeck</li>
-<li>ESP</li>
-</ul>
-
-<button class="buy" onclick="openPay('PC')">BELI</button>
-</div>
-</div>
-
-<div id="andro" class="cards">
-<div class="card">
-<div class="badge">BEST SELLER</div>
-<h3>REMOTE PANEL ANDRO</h3>
-
-<div class="price-list">
-1H - 15K<br>
-3H - 30K<br>
-7H - 50K<br>
-15H - 70K<br>
-30H - 130K
-</div>
-
-<ul>
-<li>Badan Headshot</li>
-<li>Leher Headshot</li>
-<li>Dada Headshot</li>
-<li>Aim Silent</li>
-</ul>
-
-<button class="buy" onclick="openPay('ANDRO')">BELI</button>
-</div>
-</div>
-</div>
-
-<!-- POPUP -->
-<div id="pay" class="popup">
-<div class="box">
-<div class="close-popup" onclick="closeAll()">✖</div>
-<h3>PILIH PEMBAYARAN</h3>
-<div class="option" onclick="openPkg()">WhatsApp</div>
-<div class="option" onclick="goDC()">Discord</div>
-</div>
-</div>
-
-<div id="pkg" class="popup">
-<div class="box">
-<div class="close-popup" onclick="closeAll()">✖</div>
-<h3>Pilih Paket</h3>
-<div class="pkg" onclick="pick(this,'1H - 15K')">1H - 10K</div>
-<div class="pkg" onclick="pick(this,'3H - 30K')">3H - 25K</div>
-<div class="pkg" onclick="pick(this,'7H - 50K')">7H - 45K</div>
-<div class="pkg" onclick="pick(this,'15H - 70K')">15H - 60K</div>
-<div class="pkg" onclick="pick(this,'30H - 130K')">30H - 110K</div>
-<button class="buy" onclick="sendWA()">LANJUT KE WHATSAPP</button>
-</div>
+<div id="pkgPop" class="popup">
+    <div class="box">
+        <div class="btn-x" onclick="closeAll()">✕</div>
+        <h3 style="font-family:'Orbitron'; margin-bottom:20px;">DURASI PAKET</h3>
+        <div style="max-height:250px; overflow-y:auto; padding-right:5px;" id="pkg-container">
+            </div>
+        <button class="btn-buy" style="margin-top:20px" onclick="sendWA()">CHECKOUT WA</button>
+    </div>
 </div>
 
 <script>
-let selected="",type="";
+    let selType = "", selPkg = "";
 
-function openMenu(){
-    sidebar.classList.add("active");
-    overlay.classList.add("active");
-}
-function closeAll(){
-    sidebar.classList.remove("active");
-    overlay.classList.remove("active");
-    pay.classList.remove("active");
-    pkg.classList.remove("active");
-}
+    // PARTICLES SCRIPT
+    const canvas = document.getElementById('particles');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+    function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+    window.onresize = resize; resize();
 
-function goPanel(){
-    hero.style.opacity="0";
-    setTimeout(()=>{
-        hero.style.display="none";
-        panel.style.display="block";
-        setTimeout(()=>panel.classList.add("show"),10);
-    },200);
-}
-function goHome(){
-    panel.classList.remove("show");
-    setTimeout(()=>{
-        panel.style.display="none";
-        hero.style.display="block";
-        hero.style.opacity="1";
-    },200);
-}
+    class Particle {
+        constructor() {
+            this.x = Math.random() * canvas.width;
+            this.y = Math.random() * canvas.height;
+            this.size = Math.random() * 2;
+            this.speedX = Math.random() * 0.5 - 0.25;
+            this.speedY = Math.random() * 0.5 - 0.25;
+        }
+        update() {
+            this.x += this.speedX; this.y += this.speedY;
+            if (this.x > canvas.width) this.x = 0; if (this.x < 0) this.x = canvas.width;
+            if (this.y > canvas.height) this.y = 0; if (this.y < 0) this.y = canvas.height;
+        }
+        draw() { ctx.fillStyle = 'rgba(59, 130, 246, 0.4)'; ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI*2); ctx.fill(); }
+    }
+    for(let i=0; i<80; i++) particles.push(new Particle());
+    function animate() { ctx.clearRect(0,0,canvas.width,canvas.height); particles.forEach(p => { p.update(); p.draw(); }); requestAnimationFrame(animate); }
+    animate();
 
-function switchTab(tab,el){
-    document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
-    el.classList.add('active');
-    document.querySelectorAll('.cards').forEach(c=>c.classList.remove('active'));
-    document.getElementById(tab).classList.add('active');
-}
+    function openSide() { document.getElementById('side').classList.add('active'); document.getElementById('overlay').style.display = 'block'; }
+    function closeAll() { document.getElementById('side').classList.remove('active'); document.getElementById('overlay').style.display = 'none'; document.getElementById('payPop').classList.remove('active'); document.getElementById('pkgPop').classList.remove('active'); }
+    
+    function goPanel() {
+        document.getElementById('hero').classList.add('hide');
+        setTimeout(() => {
+            document.getElementById('hero').style.display = 'none';
+            const p = document.getElementById('panel');
+            p.style.display = 'block';
+            setTimeout(() => p.classList.add('active'), 50);
+        }, 400);
+    }
 
-function openPay(t){
-    type=t;
-    overlay.classList.add("active");
-    pay.classList.add("active");
-}
+    function switchTab(id, el) {
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        el.classList.add('active');
+        document.querySelectorAll('.cards').forEach(c => c.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+    }
 
-function openPkg(){
-    pay.classList.remove("active");
-    pkg.classList.add("active");
-}
+    function openPay(t) {
+        selType = t;
+        const cont = document.getElementById('pkg-container');
+        cont.innerHTML = "";
+        const prices = t === 'PC' 
+            ? ['1 Hari - 10K', '3 Hari - 25K', '7 Hari - 45K', '15 Hari - 60K', '30 Hari - 110K']
+            : ['1 Hari - 15K', '3 Hari - 30K', '7 Hari - 55K', '15 Hari - 70K', '30 Hari - 130K'];
+        
+        prices.forEach(p => {
+            const div = document.createElement('div');
+            div.className = "menu-item"; div.style.opacity = "1"; div.style.transform = "none";
+            div.innerText = p;
+            div.onclick = function() {
+                cont.querySelectorAll('.menu-item').forEach(m => { m.style.background = "rgba(255,255,255,0.03)"; m.style.color = "white"; });
+                div.style.background = "var(--accent)"; div.style.color = "black";
+                selPkg = p;
+            };
+            cont.appendChild(div);
+        });
+        document.getElementById('payPop').classList.add('active');
+    }
 
-function pick(el,val){
-    document.querySelectorAll('.pkg').forEach(p=>p.classList.remove('active'));
-    el.classList.add('active');
-    selected=val;
-}
+    function openPkg() { document.getElementById('payPop').classList.remove('active'); document.getElementById('pkgPop').classList.add('active'); }
+    function sendWA() { if(!selPkg) return alert("Pilih durasi paket!"); window.open(`https://wa.me/6281284654872?text=Halo Admin, mau order Panel ${selType} durasi ${selPkg}`); }
 
-function sendWA(){
-    if(!selected){alert("Pilih Paket Harian Dulu!");return;}
-    let msg="Halo Min Kall, Saya ingin membeli "+type+" "+selected;
-    window.open("https://wa.me/6281284654872?text="+encodeURIComponent(msg));
-}
-
-function goDC(){
-    window.open("https://discord.gg/d7MnEbzj");
-}
+    document.addEventListener('click', function(e) {
+        const t = e.target.closest('.btn-main, .btn-buy, .tab, .menu-item');
+        if(!t) return;
+        const c = document.createElement('span');
+        const d = Math.max(t.clientWidth, t.clientHeight);
+        c.style.width = c.style.height = d + 'px';
+        c.style.left = e.clientX - t.getBoundingClientRect().left - d/2 + 'px';
+        c.style.top = e.clientY - t.getBoundingClientRect().top - d/2 + 'px';
+        c.classList.add('ripple');
+        t.appendChild(c);
+        setTimeout(() => c.remove(), 600);
+    });
 </script>
-
 </body>
 </html>
